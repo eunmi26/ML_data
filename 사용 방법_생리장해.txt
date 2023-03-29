@@ -1,0 +1,36 @@
+1. 평가용 데이터셋과 압축 파일을 아래와 같은 경로로 설치한다.
+{ROOT}
+ㄴ 62_b.tar
+ㄴ data/
+  ㄴ b/
+    ㄴ 1/
+	  ㄴ 00.jpg
+	  ㄴ 00.json
+	ㄴ 2/
+	  ㄴ 01.jpg
+	  ㄴ 01.json
+	ㄴ 3/
+	  ㄴ 02.jpg
+	  ㄴ 02.json
+	ㄴ 4/
+	  ㄴ 03.jpg
+	  ㄴ 03.json
+	ㄴ 5/
+	  ㄴ 04.jpg
+	  ㄴ 04.json
+	ㄴ 6/
+	  ㄴ 05.jpg
+	  ㄴ 05.json
+	  
+	  
+2. 압축 파일을 load 한다.
+~$ docker load -i 62_b.tar
+~$ docker images
+REPOSITORY        TAG                             IMAGE ID       CREATED          SIZE
+kimphys/62_a      v2.0                            6f7de7158750   28 minutes ago   7.76GB
+
+3. 평가용 데이터셋 폴더를 컨테이너의 root 폴더와 마운트하는 옵션(반드시 절대경로를 입력할 것)을 추가하여 컨테이너를 실행한다.
+~$ nvidia-docker run -it -v /home/oem/shk/tta/data/:/root -v /etc/localtime:/etc/localtime --name 62_b kimphys/62_b:v2.0
+
+4. 평가 코드를 실행한다.
+root@58acd718211a:/workspace# python evaluate.py
